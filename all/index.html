@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="hu">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <title>Mini-DAW</title>
+        <link rel="stylesheet" href="vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="vendor/fontawesome-free-6.7.2-web/css/all.min.css" />
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+    <body>
+        <div id="app" class="app-shell">
+        <header class="top-bar" aria-label="Transport es globalis beallitasok">
+            <div class="transport-controls">
+            <button id="toggle-mixer-btn" class="btn btn-dark" type="button" title="Mixer">
+                <i class="fas fa-sliders-h" aria-hidden="true"></i>
+            </button>
+
+            <button id="toggle-drumpad-btn" class="btn btn-dark" type="button" title="Drumpad">
+                <i class="fas fa-th" aria-hidden="true"></i>
+            </button>
+
+            <button id="toggle-piano-btn" class="btn btn-dark" type="button" title="Piano">
+                <i class="fas fa-music" aria-hidden="true"></i>
+            </button>
+
+            <button id="toggle-library-btn" class="btn btn-dark" type="button" title="Sample Library">
+                <i class="fas fa-folder-open" aria-hidden="true"></i>
+            </button>
+
+            <div class="dropdown d-inline-block project-dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="projectMenuBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-folder-open me-1" aria-hidden="true"></i> Projekt
+                </button>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="projectMenuBtn">
+                    <li><a class="dropdown-item" href="#" id="menu-import-file"><i class="fas fa-file-import me-2" aria-hidden="true"></i>Import Sample(s)</a></li>
+                    <li><a class="dropdown-item" href="#" id="menu-import-folder"><i class="fas fa-folder-plus me-2" aria-hidden="true"></i>Import Folder</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="#" id="menu-save-project"><i class="fas fa-save me-2" aria-hidden="true"></i>Projekt Mentese</a></li>
+                    <li><a class="dropdown-item" href="#" id="menu-load-project"><i class="fas fa-folder me-2" aria-hidden="true"></i>Projekt Megnyitasa</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item text-info" href="#" id="menu-export-wav"><i class="fas fa-file-export me-2" aria-hidden="true"></i>Export WAV</a></li>
+                </ul>
+            </div>
+
+            <input type="file" id="hidden-sample-input" accept="audio/*" multiple style="display:none;" />
+            <input type="file" id="hidden-folder-input" webkitdirectory directory multiple style="display:none;" />
+
+            <button id="metronome-toggle-btn" type="button" title="Metronom">
+                <i class="fas fa-stopwatch" aria-hidden="true"></i>
+            </button>
+
+            <div class="transport-row" aria-label="Fo transport gombok">
+                <button id="play-pause-btn" type="button" title="Play/Pause">
+                    <i id="play-pause-icon" class="fas fa-play" aria-hidden="true"></i>
+                </button>
+                <button id="stop-btn" type="button" title="Stop">
+                    <i class="fas fa-stop" aria-hidden="true"></i>
+                </button>
+                <button id="record-btn" type="button" class="record-btn" title="Record">
+                    <i class="fas fa-circle text-danger" aria-hidden="true"></i>
+                </button>
+                <select id="header-track-select" class="form-select form-select-sm bg-dark text-light border-secondary ms-2" style="width: auto; display: inline-block;"></select>
+            </div>
+
+            <div class="toolbar-track-actions" aria-label="Playlist akciok">
+                <button id="toolbar-add-track-btn" type="button" title="Uj sav">
+                    <i class="fas fa-plus" aria-hidden="true"></i> Sav
+                </button>
+                <button id="toolbar-remove-track-btn" type="button" title="Sav torles">
+                    <i class="fas fa-minus" aria-hidden="true"></i> Sav
+                </button>
+                <button id="toolbar-split-btn" type="button" title="Split">
+                    <i class="fas fa-cut" aria-hidden="true"></i> Split
+                </button>
+            </div>
+
+            <p id="audio-status" class="status-text" aria-live="polite">
+                Audio allapot: inaktiv
+            </p>
+
+            <div class="bpm-control" aria-label="BPM beallitas">
+                <button id="bpm-decrease-btn" type="button" title="BPM csokkentese">-</button>
+                <input id="bpm-number" type="number" min="40" max="240" value="120" step="1" />
+                <button id="bpm-increase-btn" type="button" title="BPM novelese">+</button>
+            </div>
+
+            </div>
+        </header>
+
+        <main class="workspace-grid">
+            <aside id="mixer-drawer" class="mixer-drawer" aria-label="Mixer panel">
+                <div id="mixer-container" class="mixer-container"></div>
+            </aside>
+
+            <aside id="library-drawer" class="library-drawer" aria-label="Sample library panel">
+                <div class="library-header">
+                    <strong>Sample Library</strong>
+                </div>
+                <div id="library-list" class="library-list"></div>
+            </aside>
+
+            <section id="playlist-section" class="playlist-screen">
+                <div id="playlist-container" class="playlist-body"></div>
+            </section>
+
+            <section id="drumpad-drawer" class="drumpad-drawer" aria-label="Drumpad panel">
+                <div id="drumpad-container" class="drumpad-dock"></div>
+            </section>
+
+            <section id="piano-drawer" class="piano-drawer" aria-label="Piano panel">
+                <div id="piano-container" class="piano-dock"></div>
+            </section>
+
+            <section class="instrument-host-hidden" aria-hidden="true">
+                <button id="test-tone-btn" type="button"></button>
+            </section>
+        </main>
+        </div>
+
+        <script type="module" src="./js/app.js"></script>
+    </body>
+</html>
